@@ -1,28 +1,24 @@
 package com.stevenson.demo.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Data;
 
-import javax.validation.constraints.NotBlank;
-import java.util.UUID;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
+import static javax.persistence.GenerationType.AUTO;
+import static javax.persistence.GenerationType.IDENTITY;
+import static javax.persistence.GenerationType.SEQUENCE;
+
+@Entity
+@Data
 public class Person {
-    private final UUID id;
-    @NotBlank
-    private final String name;
 
-    public Person(@JsonProperty("id") UUID id,
-                  @JsonProperty("name") String name) {
-        this.id = id;
-        this.name = name;
-    }
+    @Id
+    @GeneratedValue(strategy = AUTO)
+    private Long id;
+    private String name;
 
-    public String getName() {
-        return name;
-    }
-
-    public UUID getId() {
-        return id;
-    }
 }
 
 
