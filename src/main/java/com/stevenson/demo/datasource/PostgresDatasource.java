@@ -1,4 +1,4 @@
-package com.stevenson.demo.dao.datasource;
+package com.stevenson.demo.datasource;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.jdbc.DataSourceBuilder;
