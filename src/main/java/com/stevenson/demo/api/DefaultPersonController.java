@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @RequestMapping("api/v1/person")
 @RestController
@@ -23,18 +25,24 @@ public class DefaultPersonController implements PersonController{
     public PersonDto addPerson(@Valid @NonNull @RequestBody CreatePersonRequest request){
         Person newPerson =  personService.create(
                 Person.builder().name(request.getName()).build());
-        return PersonDto.builder()
-                .id(newPerson.getId())
-                .name(newPerson.getName()).build();
+        return convertToDto(newPerson);
     }
 
+    @GetMapping
+    public List<PersonDto> getAllPeople(){
+        return personService.getAll()
+                .stream()
+                .map(this::convertToDto)
+                .collect(Collectors.toList());
+    }
 
+    private PersonDto convertToDto(Person person){
+        return PersonDto.builder()
+                .id(person.getId())
+                .name(person.getName()).build();
+    }
 
-//    @GetMapping
-//    public List<PersonDto> getAllPeople(){
-//        return personService.getAll();
-//    }
-//
+    
 //    @GetMapping(path ="/{id}")
 //    public Person getPersonById(@PathVariable("id") Long id){
 //        return personService.get(id)
@@ -50,4 +58,5 @@ public class DefaultPersonController implements PersonController{
 //    public void deletePersonById(@PathVariable("id") Long id){
 //        personService.delete(id);
 //    }
+
 }

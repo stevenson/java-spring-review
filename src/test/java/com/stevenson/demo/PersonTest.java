@@ -1,5 +1,7 @@
 package com.stevenson.demo;
 
+import com.stevenson.demo.api.CreatePersonRequest;
+import com.stevenson.demo.api.PersonDto;
 import com.stevenson.demo.model.Person;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,9 +24,13 @@ public class PersonTest {
 
     @Test
     public void shouldCreateNewPerson() {
-        ResponseEntity<Person> response = restTemplate.postForEntity("http://localhost:" + port + "/api/v1/person",
-                Person.builder().name("newPerson").build(),
-                Person.class);
+        ResponseEntity<PersonDto> response = restTemplate.postForEntity("http://localhost:" + port + "/api/v1/person",
+                CreatePersonRequest.builder()
+                        .name("newPerson")
+                        .email("some email")
+                        .age(18)
+                        .build(),
+                PersonDto.class);
 
         assertThat(response, is(notNullValue()));
         assertThat(response.getStatusCodeValue(), is(200));

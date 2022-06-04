@@ -7,7 +7,7 @@ public interface PersonController {
 
     PersonDto addPerson(CreatePersonRequest person);
 
-//    List<PersonDto> getAllPeople();
+    List<PersonDto> getAllPeople();
 //
 ////    PersonDto getPersonById(Long id);
 ////
